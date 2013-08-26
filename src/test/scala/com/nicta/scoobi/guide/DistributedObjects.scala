@@ -94,7 +94,7 @@ We can't use `minimum` directly inside the `map` method because it's a `DObject`
 val normalised: DList[Int] = (minimum join ints) map { case (m, i) => i - m }
 ```
 
-`join` logically replicates a `DObject` value to every entry of the `DList` it is joined with.d Physically, Scoobi will push the contents of the `DObject` from the client to Hadoop's mapper and reduer tasks.
+`join` logically replicates a `DObject` value to every entry of the `DList` it is joined with. Physically, Scoobi will push the contents of the `DObject` from the client to Hadoop's mapper and reducer tasks.
 
 What if we wanted to apply a function `f` to the minimum value before subtracting it from every `DList` element. We could apply `f` within the `map` method:
 
@@ -196,7 +196,7 @@ val c: DObject[C] = ...
 val (aR: A, bR: B, cR: C) = run(a, b, c)
 ```
 
-Finally, it's also possible to persist both `DLists` and `DObjects` together by persisting the whole graph as one `persist` operation, then call `run` on specific `DObjects` to extract the relevant values (this will not re-run computations but merely read values from the output files):
+Finally, it's also possible to persist both `DLists` and `DObjects` together by persisting the whole graph as one `persist` operation, then calling `run` on specific `DObjects` to extract the relevant values (this will not re-run computations but merely read values from the output files):
 
 ```scala
 val a: DObject[A] = ...
@@ -207,8 +207,6 @@ val ds: DList[D] = ...
 persist(a, bs.toTextFile("hdfs://..."), c, ds.toTextFile("hfds://..."))
 val (aR: A, cR: C) = (a.run, c.run)
 ```
-
-Note that persisting a `DList` does not return a value, hence the underscore.
 
   """
 
